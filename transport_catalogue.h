@@ -64,7 +64,7 @@ private:
 	std::deque<detail::Bus> buses_;
 	std::unordered_map<std::string_view, const detail::Bus *> buses_ptr_;
 
-	std::unordered_map<std::string_view, std::unordered_set<std::string_view>> stop_buses_;
+	std::unordered_map<std::string_view, std::vector<std::string_view>> stop_buses_;
 	std::unordered_map<std::pair<const detail::Stop *, const detail::Stop *>, int, detail::PairStopHasher> distances_;
 };
 }

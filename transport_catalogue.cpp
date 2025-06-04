@@ -24,9 +24,12 @@ void TransportCatalogue::AddBus(const std::string_view name, const std::vector<c
 	buses_ptr_.insert({bus.number, &bus});
 
 	for(const detail::Stop *i : stops_list) {
-		std::unordered_set<std::string_view> &buses = stop_buses_[i->name];
+		std::vector<std::string_view> &buses = stop_buses_[i->name];
 
-		buses.insert(bus.number);
+		// buses.insert(bus.number);
+		if(std::find(buses.begin(), buses.end(), bus.number) == buses.end()) {
+			buses.push_back(bus.number);
+		}
 	}
 }
 
@@ -72,7 +75,7 @@ std::vector<std::string_view> TransportCatalogue::GetStopInfo(const detail::Stop
 	auto it = stop_buses_.find(stop.name);
 
 	if(it != stop_buses_.end()){
-		return {it->second.begin(), it->second.end()};
+		return it->second;
 	}
 
 	return {};
